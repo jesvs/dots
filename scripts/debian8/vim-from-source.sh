@@ -1,5 +1,8 @@
 #!/bin/bash
 
+DOTS_DIR="$(dirname "$0")/../.."
+VIM_SRC_DIR="${DOTS_DIR}/src/vim"
+
 read -r -d '' VIM_OPTIONS << EOM
 --with-features=huge
 --enable-multibyte
@@ -25,23 +28,16 @@ python3-dev
 checkinstall
 EOM
 
-echo Installing vim with options:
+echo Building vim with options:
 echo $VIM_OPTIONS
 
 # install required packages
-sudo apt-get install $REQUIRED_PACKAGES &&
+sudo apt-get -y install $REQUIRED_PACKAGES &&
 
 # remove install vim
-sudo apt-get remove vim vim-runtime gvim vim-common &&
+sudo apt-get -y remove vim vim-runtime gvim vim-common &&
 
-# get vim from git
-if [ -d vim ]; then
-	cd vim
-	git pull
-else
-	git clone https://github.com/vim/vim.git &&
-	cd vim
-fi
+cd $VIM_SRC_DIR &&
 ./configure $VIM_OPTIONS > /dev/null &&
 
 make VIMRUNTIMEDIR=/usr/share/vim/vim80 > /dev/null &&
