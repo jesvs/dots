@@ -1,0 +1,26 @@
+call plug#begin()
+source ~/.vim/vimrc_module_plugins
+call plug#end()
+
+" vim-airline options
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+set laststatus=2
+
+" tabs
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" general settings
+noswapfile
+colorscheme molokai
+set backspace=indent,eol,start
+
+" mappings
+let mapleader=","
+map ; :
+nnoremap <leader>ev         :e ~/.vimrc<cr>
+nnoremap <cr>               :w<cr>
+nnoremap <silent><space>    :bn<cr>
+nnoremap <silent><s-space>  :bp<cr>

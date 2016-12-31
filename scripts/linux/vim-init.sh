@@ -1,0 +1,48 @@
+#!/bin/bash
+PLUGINS_FILE="$HOME/.vim/vimrc_module_plugins"
+
+sudo apt-get -y install curl > /dev/null
+
+mkdir -p ~/.vim
+touch "$PLUGINS_FILE"
+
+ln -sf ~/.dots/vim/vimrc ~/.vimrc
+
+# curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
+#     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+PLUGINS=$(
+NEWT_COLORS='
+	root=,blue
+	window=,lightgray
+	border=,lightgray
+	checkbox=black,lightgray
+	button=,red
+' \
+whiptail --title "vim plugins" --separate-output \
+	--checklist "Select plugins" 20 70 10 \
+	fatih/vim-go 'Go development' on \
+	jiangmiao/auto-pairs 'Quotes in pair' on \
+	kien/ctrlp.vim 'Fuzzy file finder' on \
+	maralla/completor.vim 'Async completion framework' on \
+	mattn/emmet-vim 'Toolkit for webdevs' on \
+	tpope/vim-endwise 'Wisely add "end" in ruby' on \
+	tpope/vim-fugitive 'Git wrapper' on \
+	tpope/vim-surround 'quoting/parenthesizing' on \
+	vim-airline/vim-airline 'Lean & mean status' on \
+	vim-airline/vim-airline-themes 'Airline themes' on \
+	tomasr/molokai 'Molokai color scheme' on \
+	3>&1 1>&2 2>&3)
+exitstatus=$?
+if [ $exitstatus = 0 ]; then
+	for PLUGIN in $PLUGINS; do
+		echo Plug \'$PLUGIN\' >> "$PLUGINS_FILE"
+	done
+	# remove duplicates from file
+	cp "$PLUGINS_FILE" "$PLUGINS_FILE".orig
+	awk '!a[$0]++' "$PLUGINS_FILE".orig > "$PLUGINS_FILE"
+	rm "$PLUGINS_FILE".orig
+	vim -c ":PlugInstall"
+else
+	echo "No plugins selected."
+fi
