@@ -1,15 +1,19 @@
 #!/bin/bash
 PLUGINS_FILE="$HOME/.vim/vimrc_module_plugins"
 
-sudo apt-get -y install curl > /dev/null
+if [ ! $(uname) = 'Darwin' ]; then
+    sudo apt-get -y install curl > /dev/null
+fi
 
 mkdir -p ~/.vim
 touch "$PLUGINS_FILE"
 
 ln -sf ~/.dots/vim/vimrc ~/.vimrc
 
-# curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
-#     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if [ ! -f ~/.vim/autoload/plug.vim ]; then
+    curl -sfLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
 
 PLUGINS=$(
 NEWT_COLORS='
@@ -19,7 +23,7 @@ NEWT_COLORS='
 	checkbox=black,lightgray
 	button=,red
 ' \
-whiptail --title "vim plugins" --separate-output \
+dialog --title "vim plugins" --separate-output \
 	--checklist "Select plugins" 20 70 10 \
 	fatih/vim-go 'Go development' on \
 	jiangmiao/auto-pairs 'Quotes in pair' on \
