@@ -39,7 +39,7 @@ function gitStatus {
 function gitCommitStatus {
     COM_MSG=$(git status | tail -n1)
     if [[ $(echo $COM_MSG | grep -i added) = *added* ]]; then
-        CHANGES=$(git status | grep '\t' | wc -l | awk {'print $1'})
+        CHANGES=$(git ls-files --others --modified | wc -l | awk {'print $1'})
         echo -n " 𝛿$CHANGES"
     fi
 }

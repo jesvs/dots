@@ -1,9 +1,5 @@
 #!/bin/bash
 
-sudo apt-get -y install curl
-
-mkdir -p ~/.vim
-ln -sf ~/.dots/vim/vimrc ~/.vimrc
-
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+echo 'source ~/.dots/bash/settings.sh' >> ~/.bash_profile
+echo 'source ~/.dots/bash/aliases.sh' >> ~/.bash_profile
+echo 'source ~/.dots/bash/prompt.sh' >> ~/.bash_profile

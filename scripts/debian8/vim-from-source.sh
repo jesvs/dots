@@ -3,6 +3,11 @@
 DOTS_DIR="$(dirname "$0")/../.."
 VIM_SRC_DIR="${DOTS_DIR}/src/vim"
 
+if [ ! -f $VIM_SRC_DIR/configure ]; then
+	git submodule init
+	git submodule update
+fi
+
 read -r -d '' VIM_OPTIONS << EOM
 --with-features=huge
 --enable-multibyte
@@ -26,6 +31,7 @@ ruby-dev
 ruby
 python3-dev
 checkinstall
+libperl-dev
 EOM
 
 echo Building vim with options:

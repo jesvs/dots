@@ -3,6 +3,8 @@ PLUGINS_FILE="$HOME/.vim/vimrc_module_plugins"
 
 if [ ! $(uname) = 'Darwin' ]; then
     sudo apt-get -y install curl > /dev/null
+else
+    alias whiptail="dialog"
 fi
 
 mkdir -p ~/.vim/{backup,swap,undo}
@@ -23,7 +25,7 @@ NEWT_COLORS='
 	checkbox=black,lightgray
 	button=,red
 ' \
-dialog --title "vim plugins" --separate-output \
+whiptail --title "vim plugins" --separate-output \
 	--checklist "Select plugins" 20 70 10 \
 	fatih/vim-go 'Go development' on \
 	jiangmiao/auto-pairs 'Quotes in pair' on \

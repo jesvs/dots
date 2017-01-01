@@ -5,3 +5,5 @@ if [ $(uname) = 'Darwin' ]; then
 else
   alias ls="ls --color=auto"
 fi
+
+alias gs="git status"
