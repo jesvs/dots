@@ -9,6 +9,7 @@ DIRFG=255
 DIRBG=4
 ENDFG=15
 ENDBG=234
+DIRTYFG=180
 
 RESET="\[\e[0m\]"
 
@@ -28,10 +29,18 @@ function fgbg {
     fgcol $1
     bgcol $2
 }
-function gitbranch {
+function gitStatus {
     if [ -d .git ] || $(git rev-parse --is-inside-work-tree 2>&1 | grep true); then
         echo -en " $BRANCHSYMBOL "
-        git branch | grep '^\*' | cut -f2 -d' '
+        echo -n $(git status | grep "On branch" | cut -f3 -d' ')
+        gitCommitStatus
+    fi
+}
+function gitCommitStatus {
+    COM_MSG=$(git status | tail -n1)
+    if [[ $(echo $COM_MSG | grep -i added) = *added* ]]; then
+        CHANGES=$(git status | grep '\t' | wc -l | awk {'print $1'})
+        echo -n " 𝛿$CHANGES"
     fi
 }
 
@@ -41,7 +50,7 @@ $(fgcol $HOSTFG) \h \
 $(fgbg ${HOSTBG} ${DIRBG})${SEP}\
 $(fgcol $DIRFG) \w \
 $(fgbg $DIRBG $GITBG)${SEP}\
-$(fgbg $GITFG $GITBG)\[\$(gitbranch)\] \
+$(fgbg $GITFG $GITBG)\$(gitStatus) \
 $(fgbg $GITBG $ENDBG)${SEP}\
 $(fgbg $ENDFG $ENDBG) \$ \
 $(fgcol $ENDBG)$(defbg)${SEP}$RESET "

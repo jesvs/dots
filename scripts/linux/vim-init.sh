@@ -5,7 +5,7 @@ if [ ! $(uname) = 'Darwin' ]; then
     sudo apt-get -y install curl > /dev/null
 fi
 
-mkdir -p ~/.vim
+mkdir -p ~/.vim/{backup,swap,undo}
 touch "$PLUGINS_FILE"
 
 ln -sf ~/.dots/vim/vimrc ~/.vimrc
