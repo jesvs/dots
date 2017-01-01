@@ -33,6 +33,7 @@ function gitStatus {
     if [ -d .git ] || $(git rev-parse --is-inside-work-tree 2>&1 | grep true); then
         echo -en " $BRANCHSYMBOL "
         echo -n $(git status | grep "On branch" | cut -f3 -d' ')
+        echo -n ' '
         gitCommitStatus
     fi
 }
@@ -40,7 +41,7 @@ function gitCommitStatus {
     COM_MSG=$(git status | tail -n1)
     if [[ $(echo $COM_MSG | grep -i added) = *added* ]]; then
         CHANGES=$(git ls-files --others --modified | wc -l | awk {'print $1'})
-        echo -n " 𝛿$CHANGES"
+        echo -n "𝛿$CHANGES "
     fi
 }
 
@@ -50,7 +51,7 @@ $(fgcol $HOSTFG) \h \
 $(fgbg ${HOSTBG} ${DIRBG})${SEP}\
 $(fgcol $DIRFG) \w \
 $(fgbg $DIRBG $GITBG)${SEP}\
-$(fgbg $GITFG $GITBG)\$(gitStatus) \
+$(fgbg $GITFG $GITBG)\$(gitStatus)\
 $(fgbg $GITBG $ENDBG)${SEP}\
 $(fgbg $ENDFG $ENDBG) \$ \
 $(fgcol $ENDBG)$(defbg)${SEP}$RESET "
