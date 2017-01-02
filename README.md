@@ -19,7 +19,7 @@ git submodule update
 
 ## tern for vim
 
-Make sure nodejs is installed globally, nvm won't work)
+Make sure nodejs is installed globally (nvm won't work).
 ```
 cd ~/.vim/plugged/tern_for_vim
 npm install
