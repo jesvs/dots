@@ -38,6 +38,7 @@ whiptail --title "vim plugins" --separate-output \
 	vim-airline/vim-airline 'Lean & mean status' on \
 	vim-airline/vim-airline-themes 'Airline themes' on \
 	tomasr/molokai 'Molokai color scheme' on \
+    w0ng/vim-hybrid 'A dark colour scheme' on \
 	3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
