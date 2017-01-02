@@ -32,12 +32,13 @@ whiptail --title "vim plugins" --separate-output \
 	kien/ctrlp.vim 'Fuzzy file finder' on \
 	maralla/completor.vim 'Async completion framework' on \
 	mattn/emmet-vim 'Toolkit for webdevs' on \
+	tomasr/molokai 'Molokai color scheme' on \
 	tpope/vim-endwise 'Wisely add "end" in ruby' on \
 	tpope/vim-fugitive 'Git wrapper' on \
 	tpope/vim-surround 'quoting/parenthesizing' on \
 	vim-airline/vim-airline 'Lean & mean status' on \
 	vim-airline/vim-airline-themes 'Airline themes' on \
-	tomasr/molokai 'Molokai color scheme' on \
+    ternjs/tern_for_vim 'Tern-based JS editing' on \
     w0ng/vim-hybrid 'A dark colour scheme' on \
 	3>&1 1>&2 2>&3)
 exitstatus=$?
