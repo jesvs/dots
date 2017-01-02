@@ -13,7 +13,8 @@ set shiftwidth=4
 set expandtab
 
 " general settings
-colorscheme molokai
+set background=dark
+silent colorscheme hybrid
 set backspace=indent,eol,start
 set number
 set backupdir=~/.vim/backup//
@@ -24,9 +25,15 @@ set undodir=~/.vim/undo//
 let mapleader=","
 map ; :
 nnoremap <leader>ev         :e ~/.vimrc<cr>
+nnoremap <leader>ep         :e ~/.vim/vimrc_module_plugins<cr>
 nnoremap <cr>               :w<cr>
 nnoremap <silent><space>    :bn<cr>
 nnoremap <silent><s-space>  :bp<cr>
+nnoremap <silent><backspace> :bd<cr>
+inoremap ;; <end>;
+
+" filetypes
+au BufNewFile,BufRead *.ejs set filetype=html
 
 " ctrlp settings
 " The Silver Searcher
