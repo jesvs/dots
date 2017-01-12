@@ -1,4 +1,5 @@
 #!/bin/bash
+export PROMPT_DIRTRIM=1
 USERFG=255
 USERBG=2
 HOSTFG=233
