@@ -7,9 +7,16 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 set laststatus=2
 
+" emmet options
+let g:user_emmet_settings = {
+      \ 'javascript' : {
+      \   'extends' : 'jsx',
+      \ },
+      \ }
+
 " tabs
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 
 " general settings
@@ -24,16 +31,17 @@ set undodir=~/.vim/undo//
 " mappings
 let mapleader=","
 map ; :
-nnoremap <leader>ev         :e ~/.vimrc<cr>
-nnoremap <leader>ep         :e ~/.vim/vimrc_module_plugins<cr>
-nnoremap <cr>               :w<cr>
-nnoremap <silent><space>    :bn<cr>
-nnoremap <silent><s-space>  :bp<cr>
-nnoremap <silent><backspace> :bd<cr>
+nnoremap <leader>ev           :e ~/.vimrc<cr>
+nnoremap <leader>ep           :e ~/.vim/vimrc_module_plugins<cr>
+nnoremap <cr>                 :w<cr>
+nnoremap <silent><space>      :bn<cr>
+nnoremap <silent><s-space>    :bp<cr>
+nnoremap <silent><backspace>  :bd<cr>
+nnoremap <c-h>                <c-w>h
+nnoremap <c-l>                <c-w>l
+nnoremap <c-j>                <c-w>j
+nnoremap <c-k>                <c-w>k
 inoremap ;; <end>;
-
-" filetypes
-au BufNewFile,BufRead *.ejs set filetype=html
 
 " ctrlp settings
 " The Silver Searcher
@@ -47,3 +55,23 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
+
+" filetypes
+au BufNewFile,BufRead *.ejs set filetype=html
+" prevents inserting comment leader on new line after comment
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" functions
+" create dir on save
+function s:MkNonExDir(file, buf)
+    if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+        let dir=fnamemodify(a:file, ':h')
+        if !isdirectory(dir)
+            call mkdir(dir, 'p')
+        endif
+    endif
+endfunction
+augroup BWCCreateDir
+    autocmd!
+    autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+augroup END
