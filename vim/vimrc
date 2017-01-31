@@ -8,11 +8,12 @@ let g:airline_powerline_fonts = 1
 set laststatus=2
 
 " emmet options
+let g:emmet_html5 = 0
 let g:user_emmet_settings = {
-      \ 'javascript' : {
-      \   'extends' : 'jsx',
-      \ },
-      \ }
+\ 'javascript' : {
+\   'extends' : 'jsx',
+\ },
+\ }
 
 " tabs
 set tabstop=2
@@ -21,7 +22,8 @@ set expandtab
 
 " general settings
 set background=dark
-silent colorscheme hybrid
+set termguicolors
+silent colorscheme neodark
 set backspace=indent,eol,start
 set number
 set backupdir=~/.vim/backup//
@@ -32,17 +34,27 @@ set ignorecase
 " mappings
 let mapleader=","
 map ; :
+" store and restore session
+map <silent><f2> :mksession! ~/.vim_session<cr>
+map <silent><f3> :source ~/.vim_session<cr>
 nnoremap <leader>ev           :e ~/.vimrc<cr>
 nnoremap <leader>ep           :e ~/.vim/vimrc_module_plugins<cr>
 nnoremap <cr>                 :w<cr>
 nnoremap <silent><space>      :bn<cr>
 nnoremap <silent><s-space>    :bp<cr>
 nnoremap <silent><backspace>  :bd<cr>
+nnoremap <silent><s-h>        :bp<cr>
+nnoremap <silent><s-l>        :bn<cr>
 nnoremap <c-h>                <c-w>h
 nnoremap <c-l>                <c-w>l
 nnoremap <c-j>                <c-w>j
 nnoremap <c-k>                <c-w>k
-inoremap ;; <end>;
+inoremap ;w                   <esc>:w<cr>
+inoremap ;;                   <end>;
+inoremap ,,                   <end>,
+"imap <c-e> <end><plug>(emmet-expand-abbr)
+" emmet expand
+"autocmd FileType html,css,eruby,php imap <c-e> <plug>(emmet-expand-abbr)
 
 " ctrlp settings
 " The Silver Searcher
