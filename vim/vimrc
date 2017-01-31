@@ -24,13 +24,17 @@ set undodir=~/.vim/undo//
 " mappings
 let mapleader=","
 map ; :
+nnoremap <silent><leader>/  :nohl<cr>
 nnoremap <leader>ev         :e ~/.vimrc<cr>
 nnoremap <leader>ep         :e ~/.vim/vimrc_module_plugins<cr>
 nnoremap <cr>               :w<cr>
 nnoremap <silent><space>    :bn<cr>
 nnoremap <silent><s-space>  :bp<cr>
 nnoremap <silent><backspace> :bd<cr>
+nnoremap <silent><s-h>       :bp<cr>
+nnoremap <silent><s-l>       :bn<cr>
 inoremap ;; <end>;
+inoremap ,, <end>,
 
 " filetypes
 au BufNewFile,BufRead *.ejs set filetype=html

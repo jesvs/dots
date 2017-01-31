@@ -1,9 +1,9 @@
 #!/bin/bash
 export PROMPT_DIRTRIM=1
-USERFG=118
-USERBG=22
+USERFG=234
+USERBG=64
 HOSTFG=233
-HOSTBG=59
+HOSTBG=214
 DIRFG=255
 DIRBG=25
 GITFG=219
@@ -39,6 +39,7 @@ function gitStatus {
     fi
 }
 function gitCommitStatus {
+    return 0
     COM_MSG=$(git status | tail -n1)
     if [[ $(echo $COM_MSG | grep -i added) = *added* ]]; then
         CHANGES=$(git ls-files --others --modified | wc -l | awk {'print $1'})
