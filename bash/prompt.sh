@@ -1,27 +1,49 @@
 #!/bin/bash
 export PROMPT_DIRTRIM=1
-USERFG=234
-USERBG=64
-HOSTFG=233
-HOSTBG=214
-DIRFG=255
-DIRBG=25
-GITFG=219
-GITBG=96
-ENDFG=15
-ENDBG=235
-DIRTYFG=180
+ncolors=$(tput colors)
+if test -n "$ncolors" && test $ncolors -ge 16; then
+  # true color palette
+  userBG="145;240;242"
+  userFG="46;119;101"
+  hostBG="249;79;53"
+  hostFG="140;15;9"
+  dirBG="255;166;30"
+  dirFG="230;86;11"
+  gitBG="253;220;105"
+  gitFG="155;122;38"
+  endBG="133;102;82"
+  endFG="32;20;15"
+  dirtyFG="180;20;20"
+  sepSymbol=""
+  endSymbol=$sepSymbol
+  branchSymbol=""
+  sp=" "
+else
+  userFG=32
+  userBG=49
+  hostFG=33
+  hostBG=49
+  dirFG=34
+  dirBG=49
+  gitFG=35
+  gitBG=49
+  endFG=36
+  endBG=49
+  dirtyFG=31
+  sepSymbol="│"
+  branchSymbol="ß"
+  endSymbol=""
+  sp=""
+fi
 
-RESET="\[\e[0m\]"
+resetCode="\[\e[0m\]"
 
-SEP=""
-BRANCHSYMBOL=""
 
 function fgcol {
-    echo -en "\[\e[38;5;${1}m\]"
+    echo -en "\[\e[38;2;${1}m\]"
 }
 function bgcol {
-    echo -en "\[\e[48;5;${1}m\]"
+    echo -en "\[\e[48;2;${1}m\]"
 }
 function defbg {
     echo -en "\[\e[49m\]"
@@ -32,9 +54,9 @@ function fgbg {
 }
 function gitStatus {
     if [ -d .git ] || $(git rev-parse --is-inside-work-tree 2>&1 | grep true); then
-        echo -en " $BRANCHSYMBOL "
+        echo -en "${sp}${branchSymbol} "
         echo -n $(git status | grep "On branch" | cut -f3 -d' ')
-        echo -n ' '
+        echo -n "${sp}"
         gitCommitStatus
     fi
 }
@@ -47,14 +69,14 @@ function gitCommitStatus {
     fi
 }
 
-PS1="$(fgbg $USERFG $USERBG) \u \
-$(fgbg $USERBG $HOSTBG)${SEP}\
-$(fgcol $HOSTFG) \h \
-$(fgbg ${HOSTBG} ${DIRBG})${SEP}\
-$(fgcol $DIRFG) \w \
-$(fgbg $DIRBG $GITBG)${SEP}\
-$(fgbg $GITFG $GITBG)\$(gitStatus)\
-$(fgbg $GITBG $ENDBG)${SEP}\
-$(fgbg $ENDFG $ENDBG) \$ \
-$(fgcol $ENDBG)$(defbg)${SEP}$RESET "
+PS1="$(fgbg $userFG $userBG)${sp}\u${sp}\
+$(fgbg $userBG $hostBG)${sepSymbol}\
+$(fgcol $hostFG)${sp}\h${sp}\
+$(fgbg $hostBG $dirBG)${sepSymbol}\
+$(fgcol $dirFG)${sp}\w${sp}\
+$(fgbg $dirBG $gitBG)${sepSymbol}\
+$(fgbg $gitFG $gitBG)\$(gitStatus)\
+$(fgbg $gitBG $endBG)${sepSymbol}\
+$(fgbg $endFG $endBG)${sp}\$${sp}\
+$(fgcol $endBG)$(defbg)${endSymbol}$resetCode "
 
