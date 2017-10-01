@@ -8,7 +8,7 @@ let g:airline_powerline_fonts = 1
 set laststatus=2
 
 " emmet options
-let g:emmet_html5 = 0
+let g:emmet_html5 = 1
 let g:user_emmet_settings = {
 \ 'javascript' : {
 \   'extends' : 'jsx',
@@ -19,17 +19,40 @@ let g:user_emmet_settings = {
 set tabstop=2
 set shiftwidth=2
 set expandtab
+autocmd FileType make setlocal noexpandtab
+
+" netrw options
+let g:netrw_banner=0
+let g:netrw_liststyle=3
+let g:netrw_browse_split=4
+let g:netrw_winsize=25
+let g:netrw_altv=1
+set fillchars+=vert:\│
+" augroup ProjectDrawer
+"   autocmd!
+"   autocmd VimEnter * :Vexplore
+" augroup END
+
+" completor settings
+let g:completor_ruby_omni_trigger = '([\w+]|\.[\w+]|@[\w+]|\)\.[\w+])'
 
 " general settings
+set enc=utf-8
 set background=dark
 set termguicolors
-silent colorscheme neodark
+colorscheme afterglow
 set backspace=indent,eol,start
 set number
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
 set ignorecase
+
+if has('gui_running')
+  set guioptions-=m
+  set guioptions-=T
+  set guifont=Operator\ Mono\ Semi-Light\ 12
+endif
 
 " mappings
 let mapleader=","
