@@ -1,4 +1,3 @@
-#!/bin/bash
 plugs_file="$HOME/.vim/vimrc_module_plugins"
 mkdir -p ~/.vim/{backup,swap,undo}
 
